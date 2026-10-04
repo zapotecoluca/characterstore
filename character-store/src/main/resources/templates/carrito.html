@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Carrito</title></head>
+<body>
+<h1>Carrito</h1>
+<div th:each="item : ${items}">
+  <strong th:text="${item.producto.nombre}"></strong>
+  <span th:text="${item.cantidad}"></span>
+  <span>$<span th:text="${item.subtotal}"></span></span>
+</div>
+<h2>Total: $<span th:text="${total}"></span></h2>
+<a href="/productos">Seguir comprando</a>
+</body>
+</html>
