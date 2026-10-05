@@ -30,14 +30,14 @@ public class RickYMortyMigrationService {
         int totalPaginas;
 
         do {
-        	RickYMortyPageDto respuesta = apiService.obtenerPagina(pagina);
-            if (respuesta == null || respuesta.getResults() == null) {
+        	RYMResponseDto respuesta = apiService.obtenerPagina(pagina);
+            if (respuesta == null || respuesta.getResults() == null || respuesta.getInfo() == null) {
                 break;
             }
 
-            totalPaginas = respuesta.getPages() == null
+            totalPaginas = respuesta.getInfo().getPages() == null
                     ? pagina
-                    : respuesta.getPages();
+                    : respuesta.getInfo().getPages();
 
             for (RickYMortyCharacterDto dto : respuesta.getResults()) {
                 if (dto.getId() == null) continue;
