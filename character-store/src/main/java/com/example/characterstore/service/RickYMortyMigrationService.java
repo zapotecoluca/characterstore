@@ -40,7 +40,7 @@ public class RickYMortyMigrationService {
                     : respuesta.getInfo().getPages();
 
             for (RickYMortyCharacterDto dto : respuesta.getResults()) {
-                if (dto.getId() == null) continue;
+                if (dto.getId() == null || dto.getName() == null) continue;
 
                 boolean existe = repository
                     .existsByUniversoAndApiId(UNIVERSO, dto.getId());
@@ -48,7 +48,10 @@ public class RickYMortyMigrationService {
                 if (!existe) {
                     repository.save(convertir(dto));
                     insertados++;
+                } else {
+                	continue;
                 }
+                
             }
 
             System.out.println("Rick y Morty página " + pagina
@@ -59,6 +62,8 @@ public class RickYMortyMigrationService {
 
         return insertados;
     }
+    
+    
 
     private PersonajeRickYMorty convertir(RickYMortyCharacterDto dto) {
     	PersonajeRickYMorty p = new PersonajeRickYMorty();
@@ -82,6 +87,8 @@ public class RickYMortyMigrationService {
         p.setStock(5 + (dto.getId() % 21));
         return p;
     }
+    
+    
 
     private BigDecimal precioDidactico(int apiId) {
         double valor = 19.99 + ((apiId % 15) * 2.00);
